@@ -1,0 +1,57 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+    <?php foreach($plans as $plan): ?>
+        <div class="plan_buy">
+            <h3><?php echo  htmlspecialchars($plan->name) ; ?></h3>
+            <p style="font-style: italic">
+                <?php echo  nl2br(htmlspecialchars($plan->desc)) ; ?>
+            </p>
+            <?php
+            $settings = parse_ini_file('application/config/config.ini');
+            ?>
+            Price:  <strong><?php echo  htmlspecialchars($plan->price) ; ?></strong> - <?php echo  $settings['ppcurrency'] ; ?>
+            <br />
+            Length in days: <strong><?php echo  htmlspecialchars($plan->days) ; ?></strong>
+            <br />
+            Boot time: <strong> <?php echo  htmlspecialchars($plan->time) ; ?></strong> seconds
+            <br />
+            Concurrents attacks: <strong> <?php echo  htmlspecialchars($plan->concurrent) ; ?> </strong>
+            <br />
+            <br />
+
+
+            <form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                <input type="hidden" name="cmd" value="_xclick">
+                <input type="hidden" name="business" value="<?php echo  $settings['ppemail'] ; ?>">
+                <input type="hidden" name="currency_code" value="<?php echo  $settings['ppcurrency'] ; ?>">
+
+                <input type="hidden" name="item_name" value="<?php echo  $plan->name ; ?>">
+                <input type="hidden" name="amount" value="<?php echo  $plan->price ; ?>">
+
+                <input type="hidden" name="on0" value="User ID">
+                <input type="hidden" name="os0" value="<?php echo  Auth::user()->id ; ?>">
+                <input type="hidden" name="on1" value="Plan ID">
+                <input type="hidden" name="os1" value="<?php echo  $plan->id ; ?>">
+
+                <input type="hidden" name="custom" value="plan">
+
+                <input type="hidden" name="no_note" value="1">
+                <input type="hidden" name="no_shipping" value="1">
+
+
+                <input type="hidden" name="notify_url" value="http://<?php echo  $_SERVER['SERVER_NAME'] ; ?>/plan/process/">
+                <input type="hidden" name="return" value="http://<?php echo  $_SERVER['SERVER_NAME'] ; ?>/plan/paid/">
+                <input type="hidden" name="cancel_return" value="http://<?php echo  $_SERVER['SERVER_NAME'] ; ?>/plan/cancel/">
+
+                <input type="submit" name="submit" class="btn btn-danger" value="Purchase plan">
+
+            </form>
+
+
+        </div>
+    <?php endforeach; ?>
+<div style="clear:both"></div>
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

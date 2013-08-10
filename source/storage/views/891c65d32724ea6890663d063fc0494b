@@ -1,0 +1,31 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+<div style="width:500px; margin: 0 auto;">
+<?php echo  Form::open() ; ?>
+
+<?php echo  Form::label('email', 'Your email address') ; ?>
+<?php echo  Form::email('email','', array('class'=> 'input-block-level')) ; ?>
+
+<?php echo  Form::label('subject', 'What is it about?') ; ?>
+<?php echo  Form::text('subject','', array('class'=> 'input-block-level')) ; ?>
+
+<?php echo  Form::label('message', 'Your message, question or anything else') ; ?>
+<?php echo  Form::textarea('message','', array('class'=> 'input-block-level')) ; ?>
+
+<?php $c = rand(10000,99999); ?>
+<?php echo  Form::label('captcha', 'You\'re no bot, are you? Prove it') ; ?>
+<img src="/captcha/<?php echo  $c ; ?>" /><br/>
+<?php echo  Form::text('captcha','', array('class'=>'input-small')) ; ?>
+<?php echo  Form::hidden('captcha_key', $c) ; ?>
+
+<br/>
+<?php echo  Form::submit('Send', array('class' => 'btn btn-danger') ) ; ?>
+
+
+
+
+<?php echo  Form::close() ; ?>
+</div>
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

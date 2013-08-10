@@ -1,0 +1,9 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="alert alert-success">
+    <?php echo  $msg ; ?>
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

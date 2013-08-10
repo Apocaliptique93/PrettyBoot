@@ -1,0 +1,12 @@
+
+
+<?php \Laravel\Section::start('meta'); ?>
+<meta http-equiv="refresh" content="2;url=/">
+<?php \Laravel\Section::stop(); ?>
+
+<?php \Laravel\Section::start('content'); ?>
+Successful login!
+<?php \Laravel\Section::stop(); ?>
+
+
+<?php echo view('user')->with(get_defined_vars())->render(); ?>

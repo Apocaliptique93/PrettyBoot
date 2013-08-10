@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title><?php echo  Appsettings::page_title() ; ?></title>
+
+    <?php echo \Laravel\Section::yield('meta'); ?>
+    <?php echo  HTML::script('http://code.jquery.com/jquery-latest.min.js') ; ?>
+    <?php //  HTML::script('js/jquery-1.7.2.min.js') --}} ?>    <?php echo  HTML::script('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js') ; ?>
+
+    <?php echo  HTML::script('js/jquery-ui-timepicker-addon.js') ; ?>
+
+    <?php echo  HTML::script('js/jquery.cookie.js') ; ?>
+    <?php echo  HTML::script('js/bootstrap.min.js') ; ?>
+    <?php echo  HTML::style('css/bootstrap.css') ; ?>
+    <?php echo  HTML::style('http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css') ; ?>
+    <?php //  HTML::style('css/layout.css') --}} ?>    <?php echo  HTML::style('css/layout-n.css') ; ?>
+
+
+    <?php echo  HTML::style('/css/jquery-ui-timepicker-addon.css') ; ?>
+    <script>
+        $(document).ready(function()
+        {
+            // <?php if(Auth::check()): ?>
+
+            $('#account-info-btn').click(function()
+            {
+                if($('#acI').hasClass('in'))
+                {
+                    $.cookie('ai', 0, { expires: 365, path: '/' });
+                }
+                else
+                {
+                    $.cookie('ai', 1, { expires: 365, path: '/' });
+                }
+            });
+
+
+            // <?php endif; ?>
+
+        });
+    </script>
+    <?php echo \Laravel\Section::yield('script'); ?>
+</head>
+
+
+
+
+<body>
+<div>
+    <div class="header">
+        <span class="header_logo"><a href="/"><?php echo  Appsettings::logo() ; ?></a></span>
+
+        <div class="pull-right header_menu">
+            <ul>
+                <?php if(!Auth::check()): ?>
+                    <li>
+                        <a href="/user/register">Register</a>
+                    </li>
+                    <li class="vertical-divider"></li>
+
+                    <li>
+                        <a href="/user/login">Login</a>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="/user/settings">Settings</a>
+                    </li>
+                    <li class="vertical-divider"></li>
+                    <li>
+                        <a href="/support">Support</a>
+                    </li>
+                    <li class="vertical-divider"></li>
+                    <li>
+                        <a href="/user/logout">Logout</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="header_border"></div>
+    <div class="clearfix"></div>
+</div>
+
+
+    <div class="menu">
+
+        <div class="items">
+
+            <ul>
+                <li id="menu_caption" class="li_bot_border">
+                    <span style="padding-left:5px;">MENU</span>
+                </li>
+                <?php if(Auth::check()): ?>
+                    <li class="li_top_border li_bot_border  <?php if(URI::segment(1) == '') echo 'menu-active'; ?>">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="li_top_border li_bot_border <?php if(URI::segment(1) == 'booter') echo 'menu-active'; ?>">
+                        <a href="/booter">Booter</a>
+                    </li>
+                    <li class="li_top_border li_bot_border  <?php if(URI::segment(1) == 'plan') echo 'menu-active'; ?>">
+                        <a href="/plan">Subscription plan</a>
+                    </li>
+                    <li class="li_top_border li_bot_border  <?php if(URI::segment(1) == 'buy') echo 'menu-active'; ?>">
+                        <a href="/buy/blacklist">Buy blacklisting</a>
+                    </li>
+
+
+                    <?php if(Auth::user()->isAdmin()): ?>
+                        <li class="li_top_border li_bot_border <?php if(URI::segment(1) == 'admin') echo 'menu-active'; ?>">
+                            <a href="/admin">Admin panel</a>
+                            <br/>
+                            <?php if(Ticket::where('solved', '=', 0)->count() == 1): ?>
+                            <a href="/admin/support" style="font-size: 70%"><?php echo  Ticket::where('solved', '=', 0)->count() ; ?> ticket needs attention</a>
+                            <?php elseif(Ticket::where('solved', '=', 0)->count() > 1): ?>
+                            <a href="/admin/support" style="font-size: 70%"><?php echo  Ticket::where('solved', '=', 0)->count() ; ?> tickets need attention</a>
+                            <?php endif; ?>
+                        </li>
+                    <?php elseif(Auth::user()->isMod()): ?>
+                    <li class="li_top_border li_bot_border <?php if(URI::segment(1) == 'mod') echo 'menu-active'; ?>">
+                        <a href="/mod/">Moderator panel</a>
+                        <br/>
+                        <?php if(Ticket::where('solved', '=', 0)->count() == 1): ?>
+                        <a href="/admin/support" style="font-size: 70%"><?php echo  Ticket::where('solved', '=', 0)->count() ; ?> ticket needs attention</a>
+                        <?php elseif(Ticket::where('solved', '=', 0)->count() > 1): ?>
+                        <a href="/admin/support" style="font-size: 70%"><?php echo  Ticket::where('solved', '=', 0)->count() ; ?> tickets need attention</a>
+                        <?php endif; ?>
+                    </li>
+                    <?php endif; ?>
+                <li class="li_top_border">
+                    <div class="accordion" id="accordion2">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a id="account-info-btn" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#acI">
+                                    Account info
+                                </a>
+                            </div>
+                            <div id="acI" class="accordion-body collapse
+                                <?php if(isset($_COOKIE['ai'])): ?>
+                                    <?php if($_COOKIE['ai'] == 1): ?>
+                                        in
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            ">
+                                <div class="accordion-inner">
+                                <table>
+                                    <tbody>
+                                        <tr><th>Account:</th></tr>
+                                        <tr><td> <?php echo htmlspecialchars(Auth::user()->email) ; ?></td></tr>
+                                        <tr><th>Plan expiry date:</th></tr>
+                                        <tr><td><?php echo  Auth::user()->planExpiryDate() ; ?> <br /> <span style="font-size:80%;"><?php echo  Auth::user()->planDaysLeft() ; ?> days left</span></td></tr>
+                                        <tr><th>Boot time limit:</th></tr>
+                                        <tr><td><?php echo  Auth::user()->time ; ?> seconds</td></tr>
+                                        <tr><th>Attacks:</th></tr>
+                                        <tr><td><?php echo  Auth::user()->attacks()->count() ; ?> <span style="font-size:75%; padding-left:2px;"><?php echo  HTML::link('/booter/history', ' - History'); ?></span></td></tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+                <?php else: ?>
+                    <li class="li_top_border li_bot_border <?php if(URI::segment(2) == 'login') echo 'menu-active'; ?>">
+                        <a href="/user/login">Login</a>
+                    </li>
+                    <li class="li_top_border li_bot_border <?php if(URI::segment(2) == 'register') echo 'menu-active'; ?>">
+                        <a href="/user/register">Register</a>
+                    </li>
+                    <li class="li_top_border"></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+
+
+<div class="content-wrap">
+    <div>
+        <div class="page_id">
+            <div class="page">
+
+                <?php $cur = URI::segment(1);
+                        $cur = htmlspecialchars($cur); ?>
+                <?php if(!empty($cur)): ?>
+                <?php $url = explode('/',URI::current());
+                    $str = '';
+                    for($i=1; $i < count($url); $i++)
+                {
+                    $str .= ' / '.htmlspecialchars(ucfirst($url[$i]));
+                }?>
+                <a href="/<?php echo URI::segment(1); ?>"><?php echo  htmlspecialchars(ucfirst(URI::segment(1))) ; ?></a>
+                <span style="font-size:75%"><?php echo  htmlspecialchars($str) ; ?></span>
+                <?php else: ?>
+                    <a href="/">Home</a>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="page_id_border"></div>
+    </div>
+    <div class='content'>
+        <?php echo \Laravel\Section::yield('content'); ?>
+        <div class="clearfix"></div>
+
+    </div>
+
+
+    <div class="clearfix"></div>
+    <div class="page_id_border_bottom"></div>
+    <div class="page_id_bottom">
+    </div>
+    <div class="clearfix"></div>
+    <div style="padding:10px;">&nbsp;</div>
+</div>
+
+
+
+
+</body>
+
+
+</html>

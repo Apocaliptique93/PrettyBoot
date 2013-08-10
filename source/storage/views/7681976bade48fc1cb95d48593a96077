@@ -1,0 +1,19 @@
+
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<?php echo  Form::open() ; ?>
+
+<?php echo  Form::label('title', 'Title') ; ?>
+<?php echo  Form::text('title', '', array('style' => 'width:70%;')) ; ?>
+
+<?php echo  Form::label('body', 'News\' body') ; ?>
+<?php echo  Form::textarea('body', '', array('style' => 'width:70%; max-width:90%;')) ; ?>
+<?php echo  BBcoder::show() ; ?>
+
+<br />
+<?php echo  Form::button('Post news', array('class' => 'btn btn-danger')) ; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

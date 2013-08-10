@@ -1,0 +1,37 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+
+<?php if(empty($hosts->results)): ?>
+    <div class="alert alert-danger">
+        There are no blocked hosts yet, <a href="/admin/blacklist/add">click here to add some!</a>
+    </div>
+<?php else: ?>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Host</th>
+                <th>Description</th>
+                <th>Added by</th>
+                <th>Added at</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+    <?php foreach($hosts->results as $host): ?>
+            <tr>
+                <td><?php echo  htmlspecialchars($host->ip) ; ?></td>
+                <td><?php echo  htmlspecialchars($host->desc) ; ?></td>
+                <td><?php echo  htmlspecialchars(User::find($host->user_id)->email) ; ?></td>
+                <td><?php echo  date('Y-m-d H:i', strtotime($host->created_at)) ; ?></td>
+                <td><a href="/admin/blacklist/delete/<?php echo $host->id; ?>">Delete</a></td>
+            </tr>
+    <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

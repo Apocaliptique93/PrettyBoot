@@ -1,0 +1,22 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+<div class="span4 offset1">
+    <h3>Skype resolver API</h3>
+    <?php echo  Form::open() ; ?>
+        <?php echo  Form::label('api', 'Your API link') ; ?>
+        <?php echo  Form::text('api', $settings['skypeapi'], array('placeholder'=>'http://skype-api.com/api.php?apikey=123&username=') ) ; ?>
+        <br />
+        <?php echo  Form::button('Edit API', array('class'=>'btn btn-danger btn-small') ) ; ?>
+    <?php echo  Form::close() ; ?>
+</div>
+<div class="span3">
+    <h3>Instructions</h3>
+    <p>If you have an API yourself, please enter it in here.
+    <br/>
+    If you do not, leave the field empty to use the built in one.
+    <br /><br />
+    Please note, the built in one can be less reliable than one of yourself</p>
+</div>
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,39 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+    <h4>Attacks of <span style="font-style: italic"><?php echo  $user->email ; ?></span></h4>
+    <?php if(empty($attacks->results)): ?>
+        <div class="alert alert-danger">
+            This user has no attacks.
+        </div>
+    <?php else: ?>
+    <table class="table">
+        <caption>
+            <?php echo  Form::open('/admin/users/actions/history/delete/'.$user->id) ; ?>
+            <?php echo  Form::button('Clear attack history', array('class' => 'btn btn-danger', 'style' => 'margin-top:25px;')) ; ?>
+            <?php echo  Form::close() ; ?>
+        </caption>
+        <thead>
+            <tr>
+                <th>Target</th>
+                <th>Method</th>
+                <th>Boot time (s)</th>
+                <th>Attack date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach($attacks->results as $attack): ?>
+                <tr>
+                    <td><?php echo  htmlspecialchars($attack->ip) ; ?>:<?php echo  htmlspecialchars($attack->port) ; ?></td>
+                    <td><?php echo  htmlspecialchars($attack->method) ; ?></td>
+                    <td><?php echo  htmlspecialchars($attack->time) ; ?></td>
+                    <td><?php echo  date('Y-n-j H:i', strtotime($attack->created_at)) ; ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span style="width:100%; text-align:center;"><?php echo  $attacks->links() ; ?></span>
+    <?php endif; ?>
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,12 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<h3>Payment cancelled</h3>
+
+    <p>
+        You seemt to have cancelled your payment, try again whenever you want! :)
+    </p>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

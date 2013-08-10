@@ -1,0 +1,57 @@
+
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span3">
+<?php echo  Form::open() ; ?>
+    <h3>Blacklist</h3>
+<?php echo  Form::select('type', array('0'=>'Skype', '1'=>'IP address'), 'Skype') ; ?>
+
+<?php echo  Form::label('bl', 'IP/Skype to blacklist') ; ?>
+<?php echo  Form::text('bl') ; ?>
+
+<?php echo  Form::button('Add to blacklist', array('class' => 'btn btn-danger btn-block btn-small') ) ; ?>
+<?php echo  Form::close() ; ?>
+</div>
+<div class="span7 offset1">
+    <h3>Overview</h3>
+    <?php if(empty($sales->results)): ?>
+        <div class="alert-danger">
+            There are no custom blacklists yet.
+        </div>
+    <?php else: ?>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Type</th>
+                <th>Skype/IP</th>
+                <th>Transaction ID</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach($sales->results as $s): ?>
+
+            <tr>
+                <td><a href="/admin/users/profile/<?php echo $s->id; ?>"><?php echo  htmlspecialchars(User::find($s->user_id)->email) ; ?></a></td>
+                <td><?php echo  (htmlspecialchars($s->type) == 'skype') ? 'Skype' : 'IP address' ; ?></td>
+                <td><?php echo  htmlspecialchars($s->blacklist) ; ?></td>
+                <td>
+                    <?php if($s->transaction_id == 'Admin add'): ?>
+                    <?php echo  htmlspecialchars($s->transaction_id) ; ?>
+                    <?php else: ?>
+                    <a href="/admin/transaction/info/<?php echo $s->transaction_id; ?>"><?php echo  htmlspecialchars($s->transaction_id) ; ?></a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php echo  $sales->links() ; ?>
+    <?php endif; ?>
+</div>
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,87 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span12">
+    <div id="ticket_view">
+        <h2><?php echo  htmlspecialchars($ticket->title) ; ?> </h2>
+        <span> Created by <strong>
+                <?php if(empty(User::find($ticket->user_id)->email)): ?>
+                   User doesn't exist anymore
+                <?php else: ?>
+                <?php echo  htmlspecialchars(User::find($ticket->user_id)->email) ; ?>
+                <?php endif; ?>
+            </strong>
+        <br /> Created at: <?php echo  date('Y-m-d H:i', strtotime($ticket->created_at)) ; ?>
+        <br /> Last update: <?php echo  date('Y-m-d H:i', strtotime($ticket->updated_at)) ; ?>
+        <br /> Creation IP: <?php echo  htmlspecialchars($ticket->ip) ; ?>
+        <br />
+            <?php if($ticket->solved == 0): ?>
+            <a class="btn btn-danger btn-mini" href="/support/solve/<?php echo $ticket->id; ?>">Set ticket solved</a>
+            <?php else: ?>
+                <?php if(Auth::user()->isStaff() ): ?>
+                    <a class="btn btn-danger btn-mini" href="/support/open/<?php echo $ticket->id; ?>">Re-open ticket</a>
+                <?php endif; ?>
+            <?php endif; ?>
+
+        </span>
+
+        <br /><br/>
+        <div class="ticket-message-container">
+            Message by <strong>
+                <?php if(empty(User::find($ticket->user_id)->email)): ?>
+                    User doesn't exist anymore
+                <?php else: ?>
+                    <?php echo  htmlspecialchars(User::find($ticket->user_id)->email) ; ?>
+                <?php endif; ?>
+                        </strong> at <?php echo  date('Y-m-d H:i', strtotime($ticket->created_at)) ; ?>
+            <div class="ticket-message">
+                <?php echo  nl2br(htmlspecialchars($ticket->message)) ; ?>
+            </div>
+        </div>
+    </div>
+
+    <?php if(!empty($replies)): ?>
+        <?php foreach($replies as $r): ?>
+            <div class="ticket-message-container">
+                Message by <strong>
+                    <?php if(empty(User::find($r->user_id)->email)): ?>
+                        User doesn't exist anymore
+                    <?php else: ?>
+                        <?php echo  htmlspecialchars(User::find($r->user_id)->email) ; ?>
+                    <?php endif; ?>
+                            </strong> at <?php echo  date('Y-m-d H:i', strtotime($r->created_at)) ; ?> <span style="font-size:75%;">[<?php echo $r->ip; ?>]</span>
+                <div class="ticket-message">
+                    <?php echo  nl2br(htmlspecialchars($r->message)) ; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+    <?php endif; ?>
+
+
+    <?php if($ticket->solved == false): ?>
+
+        <?php if(!Auth::user()->isStaff()): ?>
+
+            <?php if(!empty($replies) && $replies[(count($replies)-1)]->user_id == Auth::user()->id ): ?>
+                <div class="alert alert-error">Wait for a staff member to reply</div>
+            <?php else: ?>
+                <?php echo  render('page.user.support.reply') ; ?>
+            <?php endif; ?>
+
+        <?php else: ?>
+            <?php echo  render('page.user.support.reply') ; ?>
+        <?php endif; ?>
+
+    <?php else: ?>
+        <div class="alert alert-success">
+            This ticket has been deemed solved. <br />If you do not agree, open up a new ticket in which you refer to this ticket.
+        </div>
+    <?php endif; ?>
+
+
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

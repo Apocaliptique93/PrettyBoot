@@ -1,0 +1,88 @@
+
+
+<?php \Laravel\Section::start('script'); ?>
+
+    <script>
+
+        $(document).ready( function()
+        {
+
+            setInterval( function()
+            {
+
+                var txt = $('#result_url');
+                var url = $('#url').val();
+                var host = $('#host').val();
+                var time = $('#time').val();
+                var port = $('#port').val();
+                var method = $('#method').val();
+                var custom = $('#custom').val();
+
+                if(url == '') return;
+
+                var result = url + '?' + host + '=HOST&' + time + '=TIME&' + port + '=PORT&' + method + '=METHOD&' + custom;
+
+                txt.html(result);
+
+            }, 100);
+
+        });
+
+    </script>
+
+<?php \Laravel\Section::stop(); ?>
+
+<?php \Laravel\Section::start('content'); ?>
+<div class="row">
+<div class="span2">
+    <h3>Add server/API</h3>
+    <?php echo  Form::open() ; ?>
+
+    <?php echo  Form::label('url', 'Server URL') ; ?>
+    <?php echo  Form::text('url', '', array('placeholder' => ('http://'.$_SERVER['SERVER_NAME'].'/api.php'))) ; ?>
+
+    <?php echo  Form::label('host', 'Host parameter') ; ?>
+    <?php echo  Form::text('host', 'host', array('class' => 'input-small')) ; ?>
+
+    <?php echo  Form::label('time', 'Time parameter') ; ?>
+    <?php echo  Form::text('time', 'time', array('class' => 'input-small')) ; ?>
+
+    <?php echo  Form::label('port', 'Port parameter') ; ?>
+    <?php echo  Form::text('port', 'port', array('class' => 'input-small')) ; ?>
+
+    <?php echo  Form::label('method', 'Method parameter') ; ?>
+    <?php echo  Form::text('method', 'method', array('class' => 'input-small')) ; ?>
+
+    <?php echo  Form::label('custom', 'Custom parameter(s)') ; ?>
+    <?php echo  Form::text('custom', '', array('placeholder' => 'apikey=123key321&user=John')) ; ?>
+        <br />
+
+    <?php echo  Form::button('Add server/API', array('class' => 'btn btn-danger', 'style' => 'width:220px;')) ; ?>
+    <?php echo  Form::close() ; ?>
+</div>
+
+<div class="span8 offset1">
+    <h3>Instructions</h3>
+    <ol>
+        <li>Fill in the URL of the API, example http://<?php echo $_SERVER['SERVER_NAME']; ?>/api.php</li>
+        <li>Fill in the host parameter of the API, default is "host".</li>
+        <li>Fill in the time parameter of the API, default is "time".</li>
+        <li>Fill in the port parameter of the API, default is "port".</li>
+        <li>If the api requires any custom parameters, enter them in the "custom" field.</li>
+        <li>Check if the result link looks like it should, if so click the "Add server/API" button</li>
+    </ol>
+
+    <div style="margin-top:50px;">
+        <h3>Result</h3>
+        The URL will be saved like this:
+        <br />
+        <br />
+        <span id="result_url">Nothing entered yet</span>
+
+    </div>
+</div>
+</div>
+<?php \Laravel\Section::stop(); ?>
+
+
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

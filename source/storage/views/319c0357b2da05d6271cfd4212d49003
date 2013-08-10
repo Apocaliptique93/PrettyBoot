@@ -1,0 +1,18 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span11 offset1">
+<h3>Booter methods</h3>
+
+    <?php echo  Form::open() ; ?>
+    <?php echo  Form::label('methods', 'Seperate methods with a new line') ; ?>
+    <?php echo  Form::textarea('methods', $methods) ; ?>
+    <br />
+    <?php echo  Form::button('Update methods', array('class'=>'btn btn-danger btn') ) ; ?>
+    <?php echo  Form::close() ; ?>
+</div>
+
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,124 @@
+
+<?php \Laravel\Section::start('script'); ?>
+<script>
+    $(function() {
+        $('input.datepicker').datetimepicker({
+            minDate: new Date()
+        });
+    });
+</script>
+
+<?php \Laravel\Section::stop(); ?>
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span5">
+    <h3><span style="font-style: italic; "><?php echo  $user->email ; ?></span></h3>
+    <?php if($user->isBanned()): ?>
+        <span class="brand-red">Banned</span> <span style="font-size:70%;"> until <?php echo  date('n-j-Y', strtotime($user->ban_expiry_date)) ; ?></span>
+        <br />
+        <a href="/admin/users/baninfo/<?php echo $user->id; ?>">View ban info</a>
+    <?php endif; ?>
+
+
+        <table class="profile_table">
+
+            <tbody>
+            <tr>
+                <th>Group:</th>
+                <td>
+                    <?php if($user->isAdmin()): ?>
+                    <span class="label label-important">Admin</span>
+                    <?php elseif($user->isMod()): ?>
+                    <span class="label label-info">Moderator</span>
+                    <?php else: ?>
+                    <span class="label" style="background: #4b4b4b">Member</span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <th>IP address:</th> <td><?php echo  $user->ip ; ?></td>
+            </tr>
+                <tr>
+                    <th>Plan expiry date:</th> <td><?php echo  $user->planExpiryDate() ; ?></td>
+                </tr>
+
+
+
+                <tr>
+                    <th>Boot time limit:</th>
+                    <td><?php echo  $user->time ; ?> seconds</td>
+                </tr>
+                <tr>
+                    <th>Concurrents allowed:</th>
+                    <td><?php echo  $user->concurrent ; ?></td>
+                </tr>
+                <tr>
+                    <th>Last visit:</th>
+                    <td><?php echo  date('Y-m-d H:i', strtotime($user->updated_at)) ; ?></td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+
+<div class="span12" style="margin-top:25px;">
+    <h3>Actions</h3>
+
+            <div class="profile_actions_ban" style="width:100%; float:left;">
+                <h4>Ban user</h4>
+                <?php echo  Form::open('/admin/users/actions/ban/'.$user->id, 'POST', array('class' => 'navbar-form pull-left')) ; ?>
+                <?php echo  Form::text('reason', '' , array('placeholder' => 'Reason')) ; ?>
+                <?php echo  Form::text('date', '', array('placeholder' => 'Ban expiry date', 'class' => 'datepicker', 'readonly' => 'readonly', 'style' => 'cursor:select;')) ; ?>
+                <?php echo  Form::button('Ban user', array('class' => 'btn btn-danger', 'style' => 'margin-top:5px;')) ; ?>
+                <?php echo  Form::close() ; ?>
+            </div>
+            <div class="profile_actions_plan" style=" width:100%; text-align: right;">
+                <h4>Plan actions</h4>
+                <p>Give plan or edit expiry date
+                    <?php echo  Form::open('/admin/users/actions/plan/newdate/'.$user->id) ; ?>
+                    <?php echo  Form::text('date', '', array('placeholder' => 'Expiry date', 'class' => 'datepicker input-small', 'readonly' => 'readonly', 'style' => 'cursor:select;')) ; ?>
+                    <?php echo  Form::text('time', '', array('placeholder' => 'Max sec boots', 'class'=>'input-small')) ; ?>
+                    <?php echo  Form::text('concurrent', '1', array('placeholder'=>'Concurrents' , 'class'=>'input-small') ) ; ?>
+                    <?php echo  Form::button('Set plan', array('class' => 'btn btn-danger', 'style' => 'margin-top:-10px;')) ; ?>
+                    <?php echo  Form::close() ; ?>
+
+                    <?php echo  Form::open('/admin/users/actions/plan/remove/'.$user->id) ; ?>
+                        <?php //  Check if user has active plan, if not give the button a disabled look --}} ?>                        <button class="btn btn-danger"
+                            <?php if($user->hasPlanExpired()): ?>
+                                disabled
+                            <?php endif; ?>
+                        >Remove plan</button>
+                    <?php echo  Form::close() ; ?>
+                </p>
+            </div>
+            <div class="profile_actions_attacks" style="width:100%; text-align:left;">
+                <h4>Attacks</h4>
+                <?php echo  HTML::link('/admin/users/actions/history/show/'.$user->id, 'View attack history') ; ?>
+                <?php echo  Form::open('/admin/users/actions/history/delete/'.$user->id) ; ?>
+                <?php echo  Form::button('Clear attack history', array('class' => 'btn btn-danger', 'style' => 'margin-top:25px;')) ; ?>
+                <?php echo  Form::close() ; ?>
+            </div>
+            <div class="profile_actions_admin" style="width:100%; text-align: right">
+                <h4>Group</h4>
+                <?php if(!$user->isAdmin()): ?>
+                    <?php echo  Form::open('/admin/users/actions/admin/'.$user->id) ; ?>
+                    <?php echo  Form::button('Make admin', array('class' => 'btn btn-danger')) ; ?>
+                    <?php echo  Form::close() ; ?>
+                <?php endif; ?>
+
+                <?php if(!$user->isMod()): ?>
+                <?php echo  Form::open('/admin/users/actions/mod/'.$user->id) ; ?>
+                <?php echo  Form::button('Make moderator', array('class' => 'btn btn-danger')) ; ?>
+                <?php echo  Form::close() ; ?>
+                <?php endif; ?>
+
+                <?php if($user->isAdmin() || $user->isMod()): ?>
+                    <?php echo  Form::open('/admin/users/actions/member/'.$user->id) ; ?>
+                    <?php echo  Form::button('Make member', array('class' => 'btn btn-danger')) ; ?>
+                    <?php echo  Form::close() ; ?>
+                <?php endif; ?>
+            </div>
+
+</div>
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

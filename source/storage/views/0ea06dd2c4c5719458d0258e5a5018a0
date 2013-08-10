@@ -1,0 +1,44 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span11">
+    <?php if(empty($sales->results)): ?>
+    <div class='alert alert-danger'>
+        There are no sales to display
+    </div>
+    <?php else: ?>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>PayPal Fee</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($sales->results as $s): ?>
+                <tr>
+                    <td><a href="/admin/users/profile/<?php echo $s->user_id; ?>"><?php echo  (!empty(User::find($s->user_id)->email)) ? htmlspecialchars(User::find($s->user_id)->email) : 'No user found' ; ?></a></td>
+                    <td><a href="/admin/transaction/info/<?php echo $s->transaction_id; ?>"><?php echo  htmlspecialchars($s->transaction_id) ; ?></a></td>
+                    <td><?php echo  htmlspecialchars(Round($s->amount , 2)) ; ?> <?php echo  $currency ; ?></td>
+                    <td><?php echo  htmlspecialchars(Round($s->paypal_fee , 2)) ; ?> <?php echo  $currency ; ?></td>
+                    <td><?php echo  htmlspecialchars($s->status) ; ?></td>
+                    <td><?php echo  htmlspecialchars($s->description) ; ?></td>
+                    <td><?php echo  date('Y-m-d H:i', strtotime($s->date) ) ; ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?php endif; ?>
+
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

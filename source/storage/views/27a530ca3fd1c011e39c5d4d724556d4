@@ -1,0 +1,67 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span12">
+    <h4>Overview of all tickets</h4>
+    <?php if(empty($tickets)): ?>
+    <div class="alert alert-error">
+        You have no tickets to list
+    </div>
+    <?php else: ?>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Creator</th>
+            <th>Replies</th>
+            <th>Creation date</th>
+            <th>Last update at</th>
+        </tr>
+        </thead>
+        <tbody>
+    <?php if(empty($tickets->results)): ?>
+        <div class="alert alert-danger">
+            There are no tickets to show.
+        </div>
+    <?php else: ?>
+        <?php foreach($tickets->results as $t): ?>
+        <tr>
+            <td>
+                <a href="/support/ticket/<?php echo $t->id; ?>">View ticket</a>
+            </td>
+            <td>
+                <?php echo  htmlspecialchars($t->title) ; ?>
+            </td>
+            <td>
+                <?php echo  $t->getStatus() ; ?>
+            </td>
+            <td>
+                <?php if(empty(User::find($t->user_id)->email)): ?>
+                    User doesn't exist anymore
+                <?php else: ?>
+                    <a href="/admin/users/profile/<?php echo $t->user_id; ?>"><?php echo  htmlspecialchars(User::find($t->user_id)->email) ; ?></a>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo  $t->replies()->count(); ; ?>
+            </td>
+            <td>
+                <?php echo  date('Y-m-d H:i', strtotime($t->created_at) ) ; ?>
+            </td>
+            <td>
+                <?php echo  date('Y-m-d H:i', strtotime($t->updated_at) ) ; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+        </tbody>
+    </table>
+        <?php echo  $tickets->links() ; ?>
+    <?php endif; ?>
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

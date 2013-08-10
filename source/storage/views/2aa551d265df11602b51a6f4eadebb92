@@ -1,0 +1,14 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div>
+    Thank you for registering! <br />
+    <br />
+    You are now able to login with your account and select your preferred plan.
+    <br /><br />
+    <a href="/user/login" style="width:200px;" class="btn btn-danger">Login</a>
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('user')->with(get_defined_vars())->render(); ?>

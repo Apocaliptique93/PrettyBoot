@@ -1,0 +1,31 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+
+    <?php if(empty($servers)): ?>
+        <div class="alert alert-danger">
+            You haven't added any servers yet, <a href="/admin/server/add">Click here to add one.</a>
+        </div>
+    <?php else: ?>
+    <div style="text-align: center; width:100%;">Servers: <?php echo  Server::count() ; ?> - Online: <?php echo  Server::getOnline() ; ?></div>
+        <?php foreach($servers as $server): ?>
+            <div class="server_info">
+                <h5><?php echo  htmlspecialchars($server->url) ; ?></h5>
+                Current status: <?php echo  $server->getStatusMarkup() ; ?>
+                <br />
+                Added at: <?php echo  date('Y-m-d H:i', strtotime($server->created_at)) ; ?>
+                <br />
+                <br />
+                <span style="font-size:75%; text-align: right">
+                    <a href="/admin/server/delete/<?php echo $server->id; ?>">Delete</a>
+                    <a href="/admin/server/edit/<?php echo $server->id; ?>">Edit</a>
+                </span>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,66 @@
+
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="row">
+    <div class="span12">
+        <div class="span3">
+            <h4>Licence key</h4>
+            <?php echo  Form::open('admin/settings/key') ; ?>
+
+                <?php echo  Form::label('key', 'Your licence key') ; ?>
+                <?php echo  Form::text('key', $settings['idkey'], array('class' => 'input-block-level')) ; ?>
+                <br />
+                <?php echo  Form::button('Set key', array('class' => 'btn btn-danger btn-block btn-small')) ; ?>
+            <?php echo  Form::close() ; ?>
+        </div>
+        <div class="span3 offset1">
+            <h4>Page title</h4>
+            <?php echo  Form::open('admin/settings/title') ; ?>
+
+                <?php echo  Form::label('title', 'The window\'s page title') ; ?>
+                <?php echo  Form::text('title', $settings['pagetitle'], array('class' => 'input-block-level', 'placeholder' => 'PrettyBoot')) ; ?>
+                <?php echo  Form::button('Set page title', array('class' => 'btn btn-danger btn-block btn-small')) ; ?>
+            <?php echo  Form::close() ; ?>
+        </div>
+        <div class="span3 offset1">
+            <h4>Logo parts</h4>
+            <?php echo  Form::open('admin/settings/logo') ; ?>
+                <?php echo  Form::label('part1', 'Parts of logo') ; ?>
+                <?php echo  Form::text('part1', $settings['name_part1'], array('class' => 'input-small pull-left', 'placeholder' => 'Pretty')) ; ?>
+                <?php echo  Form::text('part2', $settings['name_part2'], array('class' => 'input-small pull-left', 'placeholder' => 'Boot')) ; ?>
+                <?php echo  Form::button('Set logo parts', array('class' => 'btn btn-danger btn-block btn-small')) ; ?>
+            <?php echo  Form::close() ; ?>
+        </div>
+        <div class="span3">
+            <h4>Mail address</h4>
+            <?php echo  Form::open('admin/settings/mail') ; ?>
+                <?php echo  Form::label('mail', 'The mail address to show in case of errors') ; ?>
+                <?php echo  Form::text('mail', $settings['admin_mail'], array('class' => 'input-block-level', 'placeholder' => 'admin@prettyboot.com')) ; ?>
+                <?php echo  Form::button('Set mail address', array('class' => 'btn btn-danger btn-block btn-small')) ; ?>
+            <?php echo  Form::close() ; ?>
+        </div>
+
+        <div class="span3 offset1">
+            <h4>PayPal settings</h4>
+            <?php echo  Form::open('admin/settings/paypal') ; ?>
+                <?php echo  Form::text('ppemail', $settings['ppemail'], array('class' => 'input-block-level', 'placeholder' => 'PayPal email')) ; ?>
+                <?php echo  Form::text('currency', $settings['ppcurrency'], array('class' => 'input-block-level', 'placeholder' => 'Currency to use')) ; ?>
+
+            <?php echo  Form::button('Set PayPal info', array('class' => 'btn btn-danger btn-block btn-small')) ; ?>
+            <?php echo  Form::close() ; ?>
+        </div>
+
+        <div class="span3 offset1">
+            <h4>Miscellaneous</h4>
+            <a href="/admin/settings/dump" class="btn btn-danger btn-small btn-block">Empty all</a>
+        </div>
+    </div>
+</div>
+
+
+<?php \Laravel\Section::stop(); ?>
+
+
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

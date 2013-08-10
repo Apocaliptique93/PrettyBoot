@@ -1,0 +1,53 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span5">
+    <h3><?php echo  Appsettings::logo() ; ?></h3>
+    <div class="clearfix"></div>
+    <p>
+        We are a professional network security testing company, focussing on providing our customers with a tool that can help test your network.
+        This tool can create a massive dedicated denial of service attack, also known as DDoS against your network to test its ability to withstand lots of traffic.
+    </p>
+    <br/>
+    <br/>
+    <h5>Now, why us?</h5>
+
+
+         <ul>
+            <li>Speed optimalisation</li>
+            <li>99.9% uptime</li>
+            <li>Always highest Gbps</li>
+            <li>Easy to use user interface</li>
+            <li>Supporting instant payment through PayPal</li>
+            <li><span style="font-weight: bold">Best bang for buck</span></li>
+        </ul>
+
+</div>
+
+<div class="span4 offset2">
+    <h3>Get started right now!</h3>
+
+
+        <ol>
+            <li>
+                Create an account
+            </li>
+            <li>
+                Select your plan
+            </li>
+            <li>
+                Finish payment on PayPal
+            </li>
+            <li>Start booting, no waiting times guaranteed!</li>
+        </ol>
+
+        <a href="/user/register" class="btn btn-danger btn-block">Create an account </a>
+        <h5 style="width:100%; text-align:center;">Or</h5>
+        <a href="/user/login" class="btn btn-danger btn-block">Login</a>
+
+</div>
+<?php \Laravel\Section::stop(); ?>
+
+
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

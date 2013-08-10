@@ -1,0 +1,29 @@
+
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+
+
+
+
+    <?php if(!empty($news->results)): ?>
+        <?php foreach ($news->results as $n): ?>
+            <div class="news_item">
+
+                <h3><?php echo  htmlspecialchars($n->title) ; ?></h3>
+                <div class="news_info">by the<strong> Staff</strong> at <?php echo  date('Y-n-j H:i ', strtotime($n->created_at)) ; ?></div>
+                <br />
+                <?php $b = new BBcode; ?>
+                <p class="news_text"><?php echo  $b->toHTML(nl2br(htmlspecialchars($n->body))) ; ?></p>
+            </div>
+        <?php endforeach; ?>
+
+        <?php echo  $news->links() ; ?>
+        <?php endif; ?>
+    <?php \Laravel\Section::stop(); ?>
+
+
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

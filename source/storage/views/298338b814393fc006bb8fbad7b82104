@@ -1,0 +1,22 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+<div style="width:248px; margin:0 auto;">
+<p>
+    Fill in the email address you registered with and we'll send you your username and new password!
+</p>
+<?php echo  Form::open() ; ?>
+
+<?php echo  Form::label('emailaddress', 'Email address') ; ?>
+<div class="input-prepend">
+    <span class="add-on"><i class="icon-envelope"></i></span>
+    <?php echo  Form::email('emailaddress') ; ?>
+</div><br />
+<?php echo  Form::button('Send request', array('class'=>'btn btn-danger btn-small btn-block') ) ; ?>
+
+<?php echo  Form::close() ; ?>
+<span style="font-size:75%; width:100%; text-align: center">remember them? <a href="/user/login">Login!</a></span>
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

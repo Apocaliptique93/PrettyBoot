@@ -1,0 +1,29 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<h3>Edit plan</h3>
+<?php echo  Form::open() ; ?>
+
+<?php echo  Form::label('name', 'Name') ; ?>
+<?php echo  Form::text('name', $plan->name) ; ?>
+
+<?php echo  Form::label('price', 'Price (decimals with a period -> 0.5)') ; ?>
+<?php echo  Form::text('price', $plan->price) ; ?>
+
+<?php echo  Form::label('days', 'Length in days') ; ?>
+<?php echo  Form::text('days', $plan->days) ; ?>
+
+<?php echo  Form::label('time', 'Boot time') ; ?>
+<?php echo  Form::text('time', $plan->time) ; ?>
+
+
+<?php echo  Form::label('desc', 'Description of the plan') ; ?>
+<?php echo  Form::textarea('desc', $plan->desc) ; ?>
+<?php echo  Form::label('concurrent', 'Amount of concurrent attacks allowed') ; ?>
+<?php echo  Form::text('concurrent', $plan->concurrent) ; ?>
+<br />
+<?php echo  Form::button('Edit plan', array('class' => 'btn btn-danger', 'style' => 'width:220px;')) ; ?>
+
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

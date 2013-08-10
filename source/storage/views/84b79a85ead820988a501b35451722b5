@@ -1,0 +1,54 @@
+
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+        <?php if( empty( $users->results ) ): ?>
+            <div class="alert alert-danger">
+                You have no members :(
+            </div>
+
+        <?php else: ?>
+            <table class="table">
+                <caption>
+
+                    <span style="font-size:70%">Members: <?php echo  User::count() ; ?></span>
+                    <br /> From <strong><?php echo  $users->results[0]->email ; ?></strong> to <strong><?php echo  $users->results[count($users->results)-1]->email ; ?></strong>
+                    <?php echo  $users->links() ; ?>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>IP</th>
+                        <th>Group</th>
+                        <th>Plan expiry date</th>
+                        <th>Register date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($users->results as $user): ?>
+                        <tr>
+                            <td><?php echo  $user->id ; ?></td>
+                            <td><a href="/admin/users/profile/<?php echo $user->id; ?>"><?php echo  $user->email ; ?></a></td>
+                            <td><?php echo  $user->ip ; ?></td>
+                            <td>
+                                <?php if($user->isAdmin()): ?>
+                                    <span class="label label-important">Admin</span>
+                                <?php elseif($user->isMod()): ?>
+                                    <span class="label label-info">Moderator</span>
+                                <?php else: ?>
+                                    <span class="label" style="background: #4b4b4b">Member</span>
+                                <?php endif; ?>
+                            </td>
+                            <td><?php echo  $user->planExpiryDate() ; ?></td>
+                            <td><?php echo  $user->created_at ; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <span style="width:100%; text-align:center;"><?php echo  $users->links() ; ?></span>
+        <?php endif; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

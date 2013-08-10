@@ -1,0 +1,38 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+    <?php if(empty($attacks->results)): ?>
+        <div class="alert alert-danger">
+            You have not yet launched any attacks.
+        </div>
+    <?php else: ?>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Target</th>
+                <th>Method</th>
+                <th>Launch IP</th>
+                <th>Boot time (s)</th>
+                <th>Attack date</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <?php foreach($attacks->results as $attack): ?>
+            <tr>
+                <td><?php echo  htmlspecialchars($attack->ip) ; ?>:<?php echo  htmlspecialchars($attack->port) ; ?></td>
+                <td><?php echo  htmlspecialchars($attack->method) ; ?></td>
+                <td><?php echo  htmlspecialchars($attack->user_ip) ; ?></td>
+                <td><?php echo  htmlspecialchars($attack->time) ; ?></td>
+                <td><?php echo  date('Y-n-j H:i', strtotime($attack->created_at)) ; ?></td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <span style="width:100%; text-align:center;"><?php echo  $attacks->links() ; ?></span>
+
+    <?php endif; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

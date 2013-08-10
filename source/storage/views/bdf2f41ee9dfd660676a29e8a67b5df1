@@ -1,0 +1,8 @@
+<?php echo  Form::open() ; ?>
+
+<?php echo  Form::label('message', 'Reply message') ; ?>
+<?php echo  Form::textarea('message', '', array('class'=>'input-block-level') ) ; ?>
+
+<?php echo  Form::button('Submit reply', array('class'=>'btn btn-danger btn-small') ) ; ?>
+
+<?php echo  Form::close() ; ?>

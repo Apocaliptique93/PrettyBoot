@@ -1,0 +1,43 @@
+
+
+<?php \Laravel\Section::start('content'); ?>
+
+        <?php if(empty($history->results)): ?>
+            <div class="alert alert-danger">
+                There's no attack history to display.
+            </div>
+        <?php else: ?>
+            <table class='table table-condensed'>
+                <caption><span style="width:100%; text-align: center;"><?php echo  $history->links() ; ?></span></caption>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Target</th>
+                        <th>Boot time (s)</th>
+                        <th>Method</th>
+                        <th>Started at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($history->results as $attack): ?>
+                        <tr>
+                            <td>
+                                <?php if(empty(User::find($attack->user_id)->email)): ?>
+                                User doesn't exist anymore
+                                <?php else: ?>
+                                <a href="/admin/users/profile/<?php echo $attack->user_id; ?>"><?php echo  htmlspecialchars(User::find($attack->user_id)->email) ; ?> </a></td>
+                                <?php endif; ?>
+                            <td><?php echo  htmlspecialchars($attack->ip) ; ?>:<?php echo  htmlspecialchars($attack->port) ; ?></td>
+                            <td><?php echo  htmlspecialchars($attack->time) ; ?></td>
+                            <td><?php echo  htmlspecialchars($attack->method) ; ?></td>
+                            <td><?php echo  date('Y-m-d H:i', strtotime($attack->created_at)) ; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+            </table>
+                <span style="width:100%; text-align: center;"><?php echo  $history->links() ; ?></span>
+        <?php endif; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

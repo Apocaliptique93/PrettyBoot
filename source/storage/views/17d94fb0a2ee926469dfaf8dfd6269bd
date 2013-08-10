@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <?php echo \Laravel\Section::yield('meta'); ?>
+    <title><?php echo  Appsettings::page_title() ; ?></title>
+    <?php echo  HTML::script('http://code.jquery.com/jquery-latest.min.js') ; ?>
+    <?php echo  HTML::style('css/bootstrap.css') ; ?>
+    <?php echo  HTML::style('css/userlayout.css') ; ?>
+</head>
+
+
+
+
+<body>
+
+
+<div class="contain">
+    <a href="/" style="text-decoration: none;"><h1 style="text-align: center; font-size:350%; text-shadow: 0px 0px 5px #222"><?php echo  Appsettings::logo() ; ?></h1></a>
+    <div class="logre">
+
+    <?php echo \Laravel\Section::yield('content'); ?>
+    </div>
+</div>
+
+<div class="credits">
+    PrettyBoot written by DogEatsDog / Rogier
+</div>
+</body>
+
+
+</html>

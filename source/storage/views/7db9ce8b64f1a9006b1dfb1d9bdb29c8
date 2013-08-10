@@ -1,0 +1,38 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="span12">
+    <div class="span3">
+        <h4>Change password</h4>
+        <?php echo  Form::open('/user/changepw') ; ?>
+
+        <?php echo  Form::label('old_password', 'Current password') ; ?>
+        <?php echo  Form::password('old_password') ; ?>
+
+        <?php echo  Form::label('new_password', 'New password') ; ?>
+        <?php echo  Form::password('new_password') ; ?>
+
+        <?php echo  Form::label('confirm_new_password', 'Confirm new password') ; ?>
+        <?php echo  Form::password('confirm_new_password') ; ?>
+        <br />
+        <?php echo  Form::button('Change password', array('class'=>'btn btn-danger btn-block btn-small') ) ; ?>
+
+        <?php echo  Form::close() ; ?>
+    </div>
+
+    <div class="span3 offset1">
+        <h4>Change email address</h4>
+        <?php echo  Form::open('user/changeea') ; ?>
+
+        <?php echo  Form::label('emailaddress', 'New email address') ; ?>
+        <?php echo  Form::email('emailaddress') ; ?>
+
+        <br />
+        <?php echo  Form::button('Change email address', array('class'=>'btn btn-danger btn-block btn-small') ) ; ?>
+
+        <?php echo  Form::close() ; ?>
+    </div>
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('main')->with(get_defined_vars())->render(); ?>

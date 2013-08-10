@@ -1,0 +1,55 @@
+
+
+
+<?php \Laravel\Section::start('content'); ?>
+    <?php if(empty($news->results)): ?>
+        <div class="alert alert-danger">
+            There's no news to display.
+            <br />
+            <a href="/admin/news/new">
+                Create a new item
+            </a>
+        </div>
+    <?php else: ?>
+        <table class="table">
+            <caption>
+                <?php echo  $news->links() ; ?>
+            </caption>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Date of creation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                    <?php foreach($news->results as $item): ?>
+
+                    <tr>
+                        <td> <?php echo  htmlspecialchars($item->title) ; ?> </td>
+                        <td> <?php if(empty(User::find($item->user_id)->email)): ?>
+                                User doesn't exist anymore
+                             <?php else: ?>
+                            <a href="/admin/users/profile/<?php echo $item->user_id; ?>"><?php echo  htmlspecialchars(User::find($item->user_id)->email) ; ?> </a></td>
+                             <?php endif; ?>
+                        <td> <?php echo  date('Y-m-d H:i', strtotime($item->created_at)) ; ?> </td>
+                        <td>
+                            <?php echo  HTML::link('/admin/news/edit/'.$item->id, 'Edit') ; ?>
+                            -
+                            <?php echo  HTML::link('/admin/news/delete/'.$item->id, 'Delete') ; ?>
+                        </td>
+                    </tr>
+
+                    <?php endforeach; ?>
+
+            </tbody>
+        </table>
+            <span style="width:100%;text-align:center;"><?php echo  $news->links() ; ?></span>
+    <?php endif; ?>
+<?php \Laravel\Section::stop(); ?>
+
+
+<?php echo view('main')->with(get_defined_vars())->render(); ?>
