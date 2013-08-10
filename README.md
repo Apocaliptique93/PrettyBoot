@@ -7,46 +7,40 @@ PrettyBoot stresser source
 
 
 
-How to install
-==========
+##How to install
 
-PrettyBoot Booter Source
+Clone the files in the source directory to wherever you want, the included .htaccess will make sure every request will be directed into the /public folder.
 
-
-
-SETUP
 
 Before being able to run the script you’ll have to put some of your information in some files.
 This covers:
-Database information (MySQL)
-Host
-Database
-Username
-Password
-PayPal information
-Page title
-Logo
-Admin’s mail address
-Timezone
-Making yourself admin
+
+* Database information (MySQL)
+* Making yourself admin
+* PayPal information
+* Page title
+* Logo
+* Admin’s mail address
+* Timezone
 
 
-DATABASE INFORMATION
+
+###DATABASE INFORMATION
 
 File location: /application/config/database.php
 
-When opened go to:
-Line: 70 to 77
-array Connections -> mysql
-host : to your DB host
-database : database name
-username : username of database account
-password : password of database account
+Line: 70 to 77  
+array Connections -> mysql  
+host : to your DB host  
+database : database name  
+username : username of database account  
+password : password of database account  
+
 
 Installing the .SQL file
 Go to your PHPMyAdmin page, create a new database with the same name as you used in the database.php file. When created go to that database’s import page and import the .SQL file that is included with the PrettyBoot HUB package.
 
-Now register yourself and make yourself admin by editing your group to 3.
+Now register yourself as a normal user and make yourself admin by editing your group to 3.
 
 
 
