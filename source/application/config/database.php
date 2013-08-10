@@ -70,8 +70,8 @@ return array(
 		'mysql' => array(
 			'driver'   => 'mysql',
 			'host'     => 'localhost',
-			'database' => 'booter',
-			'username' => 'root',
+			'database' => '',
+			'username' => '',
 			'password' => '',
 			'charset'  => 'utf8',
 			'prefix'   => '',
