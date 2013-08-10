@@ -2,6 +2,47 @@ PrettyBoot
 ==========
 
 PrettyBoot stresser source
+Scroll down for install instructions.
+
+##Features
+PrettyBoot is a solid stresser source with plenty amount of features, due to it also being built upon Laravel it is easy to customise it to your likings.
+
+A list containing most of the features:
+* full-fledged user system, easy to manage
+* News system, supporting BBCode
+* Full PayPal integration, fill in your PayPal e-mail and you're ready to go!
+* Advanced API server support, any server with any parameters possible!
+* Advanced stresser page
+    + Notes per user
+    + Attack history per user
+    + Many resolvers
+        + Cloudflare
+        + Skype
+        + Geo location
+        + Hostname to IPv4
+    + Down or not checker
+    + Realtime statistics
+    + IP logger with customisable redirecting
+    + Start attacks with a single click, no page reload required!
+    + Stop button for API's that have this integrated
+    + Any attack method possible!
+* Blacklisting of IP's and Skype's, you can even sell blacklisting!
+* Customise the stresser on the back-end as Admin
+* Manage your sales and see your profits
+* User-friendly support system
+* Sleak design that is also easy to customise
+* Built with AJAX technology to enhance user experience
+* Built upon one of the best PHP frameworks, Laravel 3.2
+
+### And best of all, it is now free for anyone!
+
+
+
+
+
+
+
+
 
 
 
@@ -44,18 +85,18 @@ Now register yourself as a normal user and make yourself admin by editing your g
 
 
 
-Now you can set all the other settings in your Admin panel -> core application settings.
+Now you can set all the other settings in your Admin panel -> core application settings.  
 Direct location to this: yourdomain.com/admin/settings
 
 
 TIMEZONE
-TO BE SURE THE BOOTER WORKS SET YOUR TIMEZONE EQUAL TO THE TIMEZONE OF YOUR DATABASE OTHERWISE SOME FUNCTIONS WILL NOT WORK
+TO BE SURE THE STRESSER WORKS SET YOUR TIMEZONE EQUAL TO THE TIMEZONE OF YOUR DATABASE OTHERWISE SOME FUNCTIONS WILL NOT WORK
 
-File location: /application/config/application.php
-Line: 138
-Default: Europe/Amsterdam
-Don’t know the name of your timezone?
-http://php.net/manual/en/timezones.php
+File location: /application/config/application.php  
+Line: 138  
+Default: Europe/Amsterdam  
+Don’t know the name of your timezone?  
+http://php.net/manual/en/timezones.php  
 
 
 
