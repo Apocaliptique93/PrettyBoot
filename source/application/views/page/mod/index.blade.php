@@ -16,9 +16,6 @@
 
 
 @section('content')
-@if(!Blacklist::check())
-{{ Blacklist::error() }}
-@endif
 
 <div class="span12">
 <div class="accordion" id="collapse-adminpanel">
