@@ -40,5 +40,16 @@ class Appsettings
         return $d['idkey'];
     }
 
+    public static function isCloudFlare($range)
+    {
+        list($subnet, $mask) = explode('/', $range);
+
+        if ((ip2long($_SERVER["REMOTE_ADDR"]) & ~((1 << (32 - $mask)) - 1) ) == ip2long($subnet))
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 }

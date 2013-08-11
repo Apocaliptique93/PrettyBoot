@@ -137,11 +137,16 @@ Route::filter('before', function()
     if(@$_SERVER["HTTP_CF_CONNECTING_IP"])
     {
         $CF = array('204.93.240.0/24','204.93.177.0/24','199.27.128.0/21','173.245.48.0/20','103.21.244.0/22','103.22.200.0/22','103.31.4.0/22','141.101.64.0/18','108.162.192.0/18','190.93.240.0/20','188.114.96.0/20','197.234.240.0/22','198.41.128.0/17','162.158.0.0/15');
-        list($subnet, $mask) = explode('/', $CF);
-        if ((ip2long($_SERVER["HTTP_CF_CONNECTING_IP"]) & ~((1 << (32 - $mask)) - 1) ) == ip2long($subnet))
+        foreach($CF as $range)
         {
-            $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+            if(Appsettings::isCloudFlare($range))
+            {
+                $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+                break;
+            }
         }
+
+
     }
     $dtz = new DateTimeZone(Config::get('application.timezone'));
     $time_in_sofia = new DateTime('now', $dtz);
