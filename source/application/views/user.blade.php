@@ -24,7 +24,7 @@
 </div>
 
 <div class="credits">
-    PrettyBoot written by DogEatsDog / Rogier
+    PrettyBoot written by Rogier
 </div>
 </body>
 
